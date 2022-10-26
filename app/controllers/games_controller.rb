@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-  before_action :get_board
+  # before_action :get_board
   def game
     @game = Game.new
   end
@@ -29,9 +29,9 @@ class GamesController < ApplicationController
 
   private
 
-  def get_board
-    @board = game.initialize_board
-  end
+  # def get_board
+  #   @board = game.initialize_board
+  # end
   # def game_params
   #   params.require(:game).permit(:reference, :winner, :points)
   # end
