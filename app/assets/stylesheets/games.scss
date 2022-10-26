@@ -33,6 +33,12 @@ a:hover .game-hex {
   text-align: center;
 }
 
+.star-txt {
+  font: bold .4em sans-serif;
+  fill: rgb(219, 194, 162);
+  text-align: center;
+}
+
 .draggable {
   cursor: move;
 }

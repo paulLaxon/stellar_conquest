@@ -28,6 +28,12 @@
             d="M 0,14.1732 C 0,14.1732 8.13543,28.3465 8.13543,28.3465 C 8.13543,28.3465 24.4063,28.3465 24.4063,28.3465 C 24.4063,28.3465 32.5417,14.1732 32.5417,14.1732 C 32.5417,14.1732 24.4063,0 24.4063,0 C 24.4063,0 8.13543,0 8.13543,0 C 8.13543,0 0,14.1732 0,14.1732 z "
             id="hex-grid"
          />
+         <path
+            stroke="black" stroke-width="1"
+            d="M 19.44,50.16 L 8.22,30.72 L 30.72,30.72 L 30.72,8.13 L 50.16,19.44 L 61.44,0 L 72.72,19.44 L 92.16,8.13 L 92.16,30.72 L 114.75,30.72 L 103.44,50.16 L 122.88,61.44 L 103.44,72.72 L 114.75,92.16 L 92.16,92.16 L 92.16,114.66 L 72.72,103.44 L 61.44,122.88 L 50.16,103.44 L 30.72,114.66 L 30.72,92.16 L 8.22,92.16 L 19.44,72.72 L 0,61.44 L 19.44,50.16"
+            id="starburst"
+         />
+
       </defs>
       <g id="matrix-group" transform="matrix(.8 0 0 .8 0 0)">
          <g transform="translate(-33.736046,-35.811939)" id="layer1">
@@ -38,16 +44,31 @@
                         <% x = 35.486014 + col * 30.505167 %>
                         <% y = 37.561907 + 35.434934 * row + 17.717217 * (col % 2) %>
                         <% location = rc_to_label(row, col) %>
-                        <% if @board[location].present? && @board[location][:cloud] %>
-                           <use href="#hex-grid" fill="gray" class="game-hex"
-                              transform="matrix(1.2499044,0,0,1.2500506,<%= x %>,<%= y %>)"
-                           />
-                        <% else %>
+                        <% if @board[location].blank? %>
                            <use href="#hex-grid" fill="black" class="game-hex"
                               transform="matrix(1.2499044,0,0,1.2500506,<%= x %>,<%= y %>)"
                            />
+                           <text x="<%= x + 17.717 - location.size * 1.4 %>" y="<%= y + 6 %>" class="loc-txt"><%= location %></text>
+                        <% else %>
+                           <% if @board[location][:cloud] %>
+                              <use href="#hex-grid" fill="gray" class="game-hex"
+                                 transform="matrix(1.2499044,0,0,1.2500506,<%= x %>,<%= y %>)"
+                              />
+                           <% else %>
+                              <use href="#hex-grid" fill="black" class="game-hex"
+                                 transform="matrix(1.2499044,0,0,1.2500506,<%= x %>,<%= y %>)"
+                              />
+                           <% end %>
+                           <% if @board[location][:name].empty? %>
+                              <text x="<%= x + 17.717 - location.size * 1.4 %>" y="<%= y + 6 %>" class="loc-txt"><%= location %></text>
+                           <% else %>
+                              <% puts @board[location][:name] %>
+                              <text x="<%= x + 18.0 - @board[location][:name].size * 1.25 %>" y="<%= y + 10 %>" class="star-txt"><%= @board[location][:name] %></text>
+                              <use href="#starburst" fill="<%= @board[location][:colour] %>"
+                                 transform="matrix(1.2499044,0,0,1.2500506,<%= x + 9.0 %>,<%= y + 11.0 %>) scale(.15, .15)"
+                              />
+                           <% end %>
                         <% end %>
-                        <text x="<%= x + 17.717 - location.size * 1.4 %>" y="<%= y + 6 %>" class="loc-txt"><%= location %></text>
                      </g>
                   </a>
                <% end %>
