@@ -11,6 +11,7 @@ gem 'rails', '~> 6.0.6'
 gem 'sass-rails', '>= 6'
 gem 'turbolinks', '~> 5'
 gem 'webpacker', '~> 4.0'
+gem 'psych', '< 4'
 
 group :development, :test do
   gem 'byebug'
@@ -33,4 +34,4 @@ group :production do
   gem 'pg', '1.4.4'
 end
 
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data'

@@ -115,6 +115,7 @@ GEM
       racc (~> 1.4)
     pg (1.4.4-x64-mingw-ucrt)
     pg (1.4.4-x64-mingw32)
+    psych (3.3.4)
     public_suffix (5.0.0)
     puma (4.3.12)
       nio4r (~> 2.0)
@@ -225,6 +226,7 @@ DEPENDENCIES
   minitest
   minitest-reporters
   pg (= 1.4.4)
+  psych (< 4)
   puma (~> 4.1)
   rails (~> 6.0.6)
   sass-rails (>= 6)
