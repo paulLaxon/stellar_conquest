@@ -1,0 +1,65 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+// Place all the styles related to the Games controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+* { 
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin-top: 60px;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.canvas {
+  background-color: deepskyblue;
+}
+
+/* svg */
+
+a:hover .game-hex {
+  fill: royalblue;
+}
+
+.loc-txt {
+  font: bold .5em sans-serif;
+  fill: white;
+  text-align: center;
+}
+
+.draggable {
+  cursor: move;
+}
+
+/* pan/zoom button */
+
+.compass {
+  fill: #fff;
+  stroke: #000;
+  stroke-width: 1;
+}
+
+.button {
+  fill: #225EA8;
+  stroke: #0C2C84;
+  stroke-width: 0.5;
+  stroke-miterlimit:6;
+  stroke-linecap: round;
+}
+
+.button:hover {
+  stroke-width: 1;
+}
+
+.plus-minus {
+  fill: #fff;
+  pointer-events: none;
+}
+
+

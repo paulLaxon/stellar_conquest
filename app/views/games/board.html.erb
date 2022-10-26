@@ -1,0 +1,137 @@
+<% @board = Game.new.initialize_board %>
+<div class="canvas">
+   <svg width="100" viewbox="0 0 50 50">
+      <circle cx="25" cy="25" r="21" fill="white" opacity="0.6"></circle>
+      <path class="button" onclick="pan(0, 25)" d="M25 5 l6 10 a20 35 0 0 0 -12 0z" />
+      <path class="button" onclick="pan(25, 0)" d="M5 25 l10 -6 a35 20 0 0 0 0 12z" />
+      <path class="button" onclick="pan(0,-25)" d="M25 45 l6 -10 a20, 35 0 0,1 -12,0z" />
+      <path class="button" onclick="pan(-25, 0)" d="M45 25 l-10 -6 a35 20 0 0 1 0 12z" />
+      <circle class="compass" cx="25" cy="25" r="10"></circle>
+      <circle class="button" cx="25" cy="20.5" r="4" onclick="zoom(0.8)"/>
+      <circle class="button" cx="25" cy="29.5" r="4" onclick="zoom(1.25)"/>
+      <rect class="plus-minus" x="23" y="20" width="4" height="1"></rect>
+      <rect class="plus-minus" x="23" y="29" width="4" height="1"></rect>
+      <rect class="plus-minus" x="24.5" y="27.5" width="1" height="4"></rect>
+   </svg>
+
+   <svg
+      xmlns:svg="http://www.w3.org/2000/svg"
+      xmlns="http://www.w3.org/2000/svg"
+      version="1.0"
+      viewBox="0 0 1000 650"
+      id="game-board"
+      onload="makeDraggable(evt)"
+   >
+      <defs>
+         <path
+            stroke="darkgray" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-dasharray="none" stroke-opacity="1"
+            d="M 0,14.1732 C 0,14.1732 8.13543,28.3465 8.13543,28.3465 C 8.13543,28.3465 24.4063,28.3465 24.4063,28.3465 C 24.4063,28.3465 32.5417,14.1732 32.5417,14.1732 C 32.5417,14.1732 24.4063,0 24.4063,0 C 24.4063,0 8.13543,0 8.13543,0 C 8.13543,0 0,14.1732 0,14.1732 z "
+            id="hex-grid"
+         />
+      </defs>
+      <g id="matrix-group" transform="matrix(.8 0 0 .8 0 0)">
+         <g transform="translate(-33.736046,-35.811939)" id="layer1">
+            <% (0..31).each do |col| %>
+               <% (0..20).each do |row| %>
+                  <a href="#">
+                     <g>
+                        <% x = 35.486014 + col * 30.505167 %>
+                        <% y = 37.561907 + 35.434934 * row + 17.717217 * (col % 2) %>
+                        <% location = rc_to_label(row, col) %>
+                        <% if @board[location].present? && @board[location][:cloud] %>
+                           <use href="#hex-grid" fill="gray" class="game-hex"
+                              transform="matrix(1.2499044,0,0,1.2500506,<%= x %>,<%= y %>)"
+                           />
+                        <% else %>
+                           <use href="#hex-grid" fill="black" class="game-hex"
+                              transform="matrix(1.2499044,0,0,1.2500506,<%= x %>,<%= y %>)"
+                           />
+                        <% end %>
+                        <text x="<%= x + 17.717 - location.size * 1.4 %>" y="<%= y + 6 %>" class="loc-txt"><%= location %></text>
+                     </g>
+                  </a>
+               <% end %>
+            <% end %>
+         </g>
+      </g>
+   </svg>
+</div>
+
+<script type="text/javascript">
+   var transformMatrix = [1, 0, 0, 1, 0, 0];
+   var svg = document.getElementById('game-board');
+   var viewbox = svg.getAttributeNS(null, "viewBox").split(" ");
+   var centerX = parseFloat(viewbox[2]) / 2;
+   var centerY = parseFloat(viewbox[3]) / 2;
+   var matrixGroup = svg.getElementById("matrix-group");
+
+   function pan(dx, dy) {     	
+      transformMatrix[4] += dx;
+      transformMatrix[5] += dy;
+                  
+      var newMatrix = "matrix(" +  transformMatrix.join(' ') + ")";
+      matrixGroup.setAttributeNS(null, "transform", newMatrix);
+   }
+
+   function zoom(scale) {
+      for (var i = 0; i < 4; i++) {
+         transformMatrix[i] *= scale;
+      }
+      transformMatrix[4] += (1 - scale) * centerX;
+      transformMatrix[5] += (1 - scale) * centerY;
+                  
+      var newMatrix = "matrix(" +  transformMatrix.join(' ') + ")";
+      matrixGroup.setAttributeNS(null, "transform", newMatrix);
+   }
+
+   function makeDraggable(evt) {
+      var selectedElement, offset, transform;
+      var svg = evt.target;
+      svg.addEventListener('mousedown', startDrag);
+      svg.addEventListener('mousemove', drag);
+      svg.addEventListener('mouseup', endDrag);
+      svg.addEventListener('mouseleave', endDrag);
+
+      function startDrag(evt) {
+         if (evt.target.classList.contains('draggable')) {
+            selectedElement = evt.target;
+            offset = getMousePosition(evt);
+            // Get all the transforms currently on this element
+            var transforms = selectedElement.transform.baseVal;
+            // Ensure the first transform is a translate transform
+            if (transforms.length === 0 ||
+               transforms.getItem(0).type !== SVGTransform.SVG_TRANSFORM_TRANSLATE) {
+               // Create an transform that translates by (0, 0)
+               var translate = svg.createSVGTransform();
+               translate.setTranslate(0, 0);
+               // Add the translation to the front of the transforms list
+               selectedElement.transform.baseVal.insertItemBefore(translate, 0);
+            }
+            // Get initial translation amount
+            transform = transforms.getItem(0);
+            offset.x -= transform.matrix.e;
+            offset.y -= transform.matrix.f;
+         }
+      }
+
+      function drag(evt) {
+         if (selectedElement) {
+            evt.preventDefault();
+            var coord = getMousePosition(evt);
+            transform.setTranslate(coord.x - offset.x, coord.y - offset.y);
+         }
+      }
+
+      function endDrag(evt) {
+         selectedElement = null;
+      }
+   }
+
+   function getMousePosition(evt) {
+      var CTM = svg.getScreenCTM();
+      return {
+         x: (evt.clientX - CTM.e) / CTM.a,
+         y: (evt.clientY - CTM.f) / CTM.d
+      };
+   }
+</script>

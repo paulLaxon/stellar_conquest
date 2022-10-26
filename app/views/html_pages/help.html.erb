@@ -1,3 +1,5 @@
+<% provide(:title, 'Rules') %>
+
 <div class="top">
   <%= link_to "back to top", anchor: 'top' %>
 </div>
@@ -64,8 +66,8 @@
   <h3 id='2.1'>2.1	MAPBOARD</h3>
   <p>The field of play. The map depicts a small portion of the Milky Way Galaxy near our sun. (It has been abstracted and distorted to a degree for game purposes.) A grid of hexagons (called hexes for short) has been superimposed over the map to determine locations and regulate movement. F.mh hex contains its own individual code (called a grid-coordinate) to identify it. The distance across one hex, from Side to side, is approximately one-eighth light-year In addition. There are several special features displayed on the map which require some explanation
   <p>Star Hexes: Fifty four of the hexes contain colored star-like symbol that identifies the presence of a star. The color corresponds to the dominant visible wavelength emitted by the star.
-  <table style="width:50%; margin-bottom:10px">
-    <tr>
+  <table style="width:50%; margin-bottom:10px;">
+    <tr id="heading_line">
       <th>COLOR</th>
       <th>SURFACE TEMPERATURE</th>
     </tr>

@@ -29,18 +29,26 @@ textures {
   margin: 5px;
  }
 
- .right {
+.right {
   float: right;
   padding: 0 0 20px 20px;
   margin-top: -20px;
- }
+}
 
- .top {
+.top {
   position: sticky;
   top: 50px;
   float: left;
   margin-left: -10%;
- }
+}
+
+#heading_line {
+  border-bottom: 2px solid red;
+}
+
+table, th, td {
+  border: 1px solid black;
+}
 
 /* fonts */
 

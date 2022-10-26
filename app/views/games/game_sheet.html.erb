@@ -1,0 +1,53 @@
+<% provide(:title, 'Game Sheet') %>
+
+<h1>Game Sheet</h1>
+<h2>Turn: </h2>
+<div class="container">
+  <div class="row">
+    <div class="col-md-9">
+      <%= link_to "Add Colony", '#', class: "btn btn-sm btn-primary" %>
+      <table style="width:80%; margin-bottom:10px; border:2px solid black">
+        <caption>Colonies</caption>
+        <tr>
+          <th>Star</th>
+          <th>Orbit</th>
+          <th>Habitability</th>
+          <th>Population</th>
+          <th>Factories</th>
+          <th>MBs</th>
+          <th>Adv. MBs</th>
+          <th>Patrol</th>
+          <th>Monitors</th>
+          <th>Shield</th>
+        </tr>
+        <% @colonies.each do |colony| %>
+          <tr>
+            <td><%= colony.star %></td>
+            <td><%= colony.orbit %></td>
+            <td><%= colony.habitability %></td>
+            <td><%= colony.population %> of <%= colony.max_pop %> max</td>
+            <td><%= colony.factories %> of <%= max_factories(colony.max_pop) %> max</td>
+            <td><%= colony.habitability %></td>
+            <td><%= colony.habitability %></td>
+            <td><%= colony.habitability %></td>
+            <td><%= colony.habitability %></td>
+            <td><%= colony.habitability %></td>
+          </tr>
+        <% end %>
+
+      </table>
+    </div>
+
+    <div class="col-md-3">
+      <table style="width:80%; margin-bottom:10px;">
+        <caption>Known Star Systems</caption>
+        <tr>
+          <th>Name</th>
+          <th>Colour</th>
+          <th>Location</th>
+        </tr>
+        <tr>
+      </table>
+    </div>
+  </div>
+</div>
