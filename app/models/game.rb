@@ -58,7 +58,7 @@ class Game < ApplicationRecord
   private
 
   def import_csv_table(filename, header)
-    directory = 'public'
+    directory = "#{Rails.root}/public"
     filename =  directory.concat(filename)
     csv_text = File.read(filename)
     CSV.parse(csv_text, headers: header, converters: :integer)
