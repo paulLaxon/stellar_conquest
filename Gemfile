@@ -6,12 +6,13 @@ ruby '3.1.2'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'bootstrap-sass', '~> 3.4.1'
 gem 'jbuilder', '~> 2.7'
+gem 'net-smtp', require: false
+gem 'psych', '< 4'
 gem 'puma', '~> 4.1'
 gem 'rails', '~> 6.0.6'
 gem 'sass-rails', '>= 6'
 gem 'turbolinks', '~> 5'
 gem 'webpacker', '~> 4.0'
-gem 'psych', '< 4'
 
 group :development, :test do
   gem 'byebug'
