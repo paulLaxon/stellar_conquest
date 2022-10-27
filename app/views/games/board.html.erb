@@ -62,7 +62,6 @@
                            <% if @board[location][:name].empty? %>
                               <text x="<%= x + 17.717 - location.size * 1.4 %>" y="<%= y + 6 %>" class="loc-txt"><%= location %></text>
                            <% else %>
-                              <% puts @board[location][:name] %>
                               <text x="<%= x + 18.0 - @board[location][:name].size * 1.25 %>" y="<%= y + 10 %>" class="star-txt"><%= @board[location][:name] %></text>
                               <use href="#starburst" fill="<%= @board[location][:colour] %>"
                                  transform="matrix(1.2499044,0,0,1.2500506,<%= x + 9.0 %>,<%= y + 11.0 %>) scale(.15, .15)"

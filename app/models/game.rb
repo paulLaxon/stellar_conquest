@@ -31,8 +31,8 @@ class Game < ApplicationRecord
   end
 
   def initialize_stars
-    planets = import_csv_table('\Planets.csv', true)
-    stars = import_csv_table('\Stars.csv', true)
+    planets = import_csv_table('/Planets.csv', true)
+    stars = import_csv_table('/Stars.csv', true)
 
     num_cards = planets['card'].max
     cards = (1..num_cards).to_a.shuffle
@@ -52,7 +52,7 @@ class Game < ApplicationRecord
   end
 
   def initialize_clouds
-    import_csv_table('\Clouds.csv', false)
+    import_csv_table('/Clouds.csv', false)
   end
 
   private
